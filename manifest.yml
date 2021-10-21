@@ -1,0 +1,34 @@
+# YAML
+id: app-twitter-dynamicscreen
+name: app.name
+description: app.description
+logo: ./resources/img/Donatello.jpeg
+version: 0.2.0
+channel: stable
+api-level: 1
+color: blue
+author:
+    name: DynamicScreen
+    email: bonjour@dynamicscreen.com
+privileges:
+    needs_account:
+        -   identifier: google1
+            type: google
+            why: privileges.needs_account.google.why
+        -   identifier: microsoft1
+            type: microsoft
+            why: privileges.needs_account.microsoft.why
+modules:
+    - name: modules.twitter.name
+      logo: modules.twitter.logo
+      identifier: twitter
+      color: #1EA2F1
+      type: slide
+      description: Display your last tweets
+      vue:
+          component: src/twitter/slide/Twitter.ts
+          options: src/twitter/TwitterOptions.vue
+      php:
+          handler: Vendor\DynamicScreenTwitter\TwitterHandler
+      node:
+          handler: src/handler.js

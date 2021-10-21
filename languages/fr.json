@@ -1,0 +1,25 @@
+{
+  "app": {
+    "name": "Twitter",
+    "description": "Affiche vos derniers tweets",
+    "author": {
+      "name": "DynamicScreen",
+      "email": "bonjour@dynamicscreen.com",
+      "note": "Written with love <3 Buy me a cofee @ itsajoke.com !"
+    }
+  },
+  "privileges": {
+    "needs_account": {
+      "google": {
+        "why": "Because it's required... :'("
+      }
+    }
+  },
+  "modules": {
+    "weather": {
+      "name": "Twitter",
+      "description": "Affiche vos derniers tweets",
+      "logo": "fab fa-twitter"
+    }
+  }
+}

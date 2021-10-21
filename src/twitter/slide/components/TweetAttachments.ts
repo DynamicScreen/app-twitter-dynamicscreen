@@ -1,0 +1,42 @@
+import {defineComponent, h, toRef} from "vue";
+
+import User from "./User";
+
+export default defineComponent({
+    props: {
+        text: { type: String, required: true },
+        tweetAttachment: { type: String, required: true }
+    },
+    setup(props) {
+        const text = toRef(props, "text");
+        const tweetAttachment = toRef(props, "tweetAttachment")
+
+        return () =>
+            h("div", {
+                class: "container flex flex-row"
+            }, [
+                h("div", {
+                    class: "bloc-left w-1/2 flex h-full bg-blue-400 flex-row items-center"
+                }, [
+                    h("div", {
+                        class: "h-1/2 w-full bg-cover",
+                        style: {
+                            backgroundImage: "url(" + tweetAttachment.value + ")"
+                        }
+                    })
+                ]),
+                h("div", {
+                    class: "bloc-right w-1/2 h-full flex items-center justify-center"
+                }, [
+                    h("div", {
+                        class: "w-2/3 h-2/3 text-2xl font-semibold flex justify-center flex-col space-y-10"
+                    }, [
+                        h("div", {
+                        }, text.value),
+                        h(User)
+                    ])
+                ])
+            ])
+    }
+
+})
