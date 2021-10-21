@@ -3,6 +3,7 @@ import {useFieldUser} from "../Twitter";
 
 export default defineComponent({
     setup() {
+        console.log(useFieldUser());
         const fieldUser = useFieldUser();
         const userPicture = ref(fieldUser.userPicture)
         const userName = ref(fieldUser.userName);
