@@ -91,6 +91,14 @@ export default class TwitterSlideModule extends SlideModule {
         const userName = ref(slide.data.user.name);
         const publicationDate = ref(slide.data.publicationDate);
 
+        provide(twitterContext, {
+            userName: userName.value,
+            userPicture: userPicture.value,
+            publicationDate: publicationDate.value
+        });
+
+        console.log(useTwitterContext());
+
         this.context.onPrepare(async () => {
 
         });
@@ -99,11 +107,7 @@ export default class TwitterSlideModule extends SlideModule {
         });
 
         this.context.onPlay(async () => {
-            provide(twitterContext, {
-                userName: userName.value,
-                userPicture: userPicture.value,
-                publicationDate: publicationDate.value
-            });
+
         });
 
         // this.context.onPause(async () => {
