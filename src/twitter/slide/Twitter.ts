@@ -18,16 +18,16 @@ import TweetAttachments from "./components/TweetAttachments";
 const en = require("../../../languages/en.json");
 const fr = require("../../../languages/fr.json");
 
-export interface FieldUserState {
+export interface FieldTwitterContextState {
     readonly userPicture: string
     readonly userName: string
     readonly publicationDate: string
 }
 
-export let FieldUser = Symbol("FieldUser") as InjectionKey<FieldUserState>
+export let twitterContext = Symbol("FieldUser") as InjectionKey<FieldTwitterContextState>
 
-export function useFieldUser() {
-    return inject(FieldUser, null);
+export function useTwitterContext() {
+    return inject(twitterContext, null);
 }
 
 export default class TwitterSlideModule extends SlideModule {
@@ -91,12 +91,6 @@ export default class TwitterSlideModule extends SlideModule {
         const userName = ref(slide.data.user.name);
         const publicationDate = ref(slide.data.publicationDate);
 
-        provide(FieldUser, {
-            userName: userName.value,
-            userPicture: userPicture.value,
-            publicationDate: publicationDate.value
-        });
-
         this.context.onPrepare(async () => {
 
         });
@@ -105,7 +99,11 @@ export default class TwitterSlideModule extends SlideModule {
         });
 
         this.context.onPlay(async () => {
-
+            provide(twitterContext, {
+                userName: userName.value,
+                userPicture: userPicture.value,
+                publicationDate: publicationDate.value
+            });
         });
 
         // this.context.onPause(async () => {
