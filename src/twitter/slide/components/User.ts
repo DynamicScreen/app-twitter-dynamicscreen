@@ -13,7 +13,7 @@ export default defineComponent({
 
         return () =>
             h("div", {
-                class: "w-64 flex items-center space-x-5"
+                class: "w-full flex items-center space-x-5"
             }, [
                 h("div", {
                     class: "rounded-full w-16 h-16 bg-contain",

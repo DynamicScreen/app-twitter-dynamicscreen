@@ -117,7 +117,7 @@ export default class TwitterSlideModule extends SlideModule {
                     class: "w-full h-full"
                 }),
                 h("div", {
-                    class: "rounded-full bg-contain bg-no-repeat bg-center w-16 h-16 absolute top-10 right-10",
+                    class: "bg-contain bg-no-repeat bg-center w-16 h-16 absolute top-10 right-10",
                     style: {
                         backgroundImage: "url(" + logo.value + ")"
                     }
