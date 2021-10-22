@@ -25,7 +25,7 @@ export default defineComponent({
                     class: "bloc-left w-1/2 flex h-full bg-blue-400 flex-row items-center"
                 }, [
                     h("div", {
-                        class: "h-1/2 w-full bg-cover",
+                        class: "h-1/2 w-full bg-contain",
                         style: {
                             backgroundImage: "url(" + tweetAttachment.value + ")"
                         }
