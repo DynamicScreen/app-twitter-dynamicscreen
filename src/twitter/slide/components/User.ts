@@ -5,9 +5,9 @@ export default defineComponent({
     setup() {
         console.log(useTwitterContext());
         const fieldUser = useTwitterContext();
-        const userPicture = ref(fieldUser.userPicture)
-        const userName = ref(fieldUser.userName);
-        const publicationDate = ref(fieldUser.publicationDate);
+        const userPicture = fieldUser.userPicture
+        const userName = fieldUser.userName;
+        const publicationDate = fieldUser.publicationDate;
 
         return () =>
             h("div", {

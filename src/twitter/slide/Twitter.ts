@@ -8,7 +8,7 @@ import {
     SlideModule
 } from "dynamicscreen-sdk-js";
 
-import {computed, inject, InjectionKey, onMounted, provide, reactive, ref, VNode} from 'vue';
+import {computed, inject, InjectionKey, onMounted, provide, reactive, Ref, ref, VNode} from 'vue';
 import i18next from "i18next";
 
 import { h } from "vue"
@@ -18,13 +18,13 @@ import TweetAttachments from "./components/TweetAttachments";
 const en = require("../../../languages/en.json");
 const fr = require("../../../languages/fr.json");
 
-export interface FieldTwitterContextState {
-    readonly userPicture: string
-    readonly userName: string
-    readonly publicationDate: string
+export interface TwitterContextState {
+    readonly userPicture: Ref<string>
+    readonly userName: Ref<string>
+    readonly publicationDate: Ref<string>
 }
 
-export let twitterContext = Symbol("FieldUser") as InjectionKey<FieldTwitterContextState>
+export let twitterContext = Symbol("FieldUser") as InjectionKey<TwitterContextState>
 
 export function useTwitterContext() {
     return inject(twitterContext, null);
@@ -92,13 +92,11 @@ export default class TwitterSlideModule extends SlideModule {
         const publicationDate = ref(slide.data.publicationDate);
 
         provide(twitterContext, {
-            userName: userName.value,
-            userPicture: userPicture.value,
-            publicationDate: publicationDate.value
+            userName: userName,
+            userPicture: userPicture,
+            publicationDate: publicationDate
         });
-
-        console.log(useTwitterContext());
-
+        
         this.context.onPrepare(async () => {
 
         });
