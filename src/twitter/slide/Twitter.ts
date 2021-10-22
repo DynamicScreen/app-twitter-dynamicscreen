@@ -71,9 +71,9 @@ export default class TwitterSlideModule extends SlideModule {
 
         const logo = ref(slide.data.logo);
         const isTweetWithAttachment = computed(() => {
-            return !!slide.data.attachment;
+            return !!slide.data.attachmentUrl;
         })
-        const tweetAttachment = isTweetWithAttachment.value ? ref(slide.data.url) : null;
+        const tweetAttachment = isTweetWithAttachment.value ? ref(slide.data.attachmentUrl) : null;
         const text = ref(slide.data.text);
         const userPicture = ref(slide.data.user.picture);
         const userName = ref(slide.data.user.name);
