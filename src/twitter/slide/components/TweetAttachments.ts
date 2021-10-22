@@ -5,11 +5,17 @@ import User from "./User";
 export default defineComponent({
     props: {
         text: { type: String, required: true },
-        tweetAttachment: { type: String, required: true }
+        tweetAttachment: { type: String, required: true },
+        userPicture: { type: String, required: true },
+        userName: { type: String, required: true },
+        publicationDate: { type: String, required: true }
     },
     setup(props) {
         const text = toRef(props, "text");
-        const tweetAttachment = toRef(props, "tweetAttachment")
+        const tweetAttachment = toRef(props, "tweetAttachment");
+        const userPicture = toRef(props, "userPicture");
+        const userName = toRef(props, "userName");
+        const publicationDate = toRef(props, "publicationDate");
 
         return () =>
             h("div", {
@@ -33,7 +39,11 @@ export default defineComponent({
                     }, [
                         h("div", {
                         }, text.value),
-                        h(User)
+                        h(User, {
+                            userPicture: userPicture.value,
+                            userName: userName.value,
+                            publicationDate: publicationDate.value,
+                        })
                     ])
                 ])
             ])

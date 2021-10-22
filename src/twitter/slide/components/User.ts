@@ -1,13 +1,15 @@
 import {defineComponent, h, ref, toRef} from "vue"
-import {useTwitterContext} from "../Twitter";
 
 export default defineComponent({
-    setup() {
-        console.log(useTwitterContext());
-        const fieldUser = useTwitterContext();
-        const userPicture = fieldUser.userPicture
-        const userName = fieldUser.userName;
-        const publicationDate = fieldUser.publicationDate;
+    props: {
+        userPicture: { type: String, required: true },
+        userName: { type: String, required: true },
+        publicationDate: { type: String, required: true }
+    },
+    setup(props) {
+        const userPicture = toRef(props, "userPicture");
+        const userName = toRef(props, "userName");
+        const publicationDate = toRef(props, "publicationDate");
 
         return () =>
             h("div", {
