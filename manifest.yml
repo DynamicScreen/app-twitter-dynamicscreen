@@ -36,10 +36,14 @@ modules:
       color: deepskyblue
       type: slide
       description: Display your last tweets
-      vue:
-          component: src/Twitter/Twitter.ts
-          options: src/Twitter/TwitterOptions.ts
-      php:
-          handler: \DynamicScreen\Twitter\Twitter\TwitterSlideHandler
-      node:
-          handler: src/handler.js
+      options:
+        privileges:
+          needs_account:
+            - twitter-driver
+        vue:
+            component: src/Twitter/Twitter.ts
+            options: src/Twitter/TwitterOptions.ts
+        php:
+            handler: \DynamicScreen\Twitter\Twitter\TwitterSlideHandler
+        node:
+            handler: src/handler.js
