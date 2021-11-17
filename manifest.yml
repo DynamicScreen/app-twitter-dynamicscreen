@@ -25,7 +25,7 @@ modules:
       options:
         provider: twitter
         vue:
-          component: src/Twitter/TwitterAccount.ts
+          component: src/TwitterDriver/TwitterAccount.ts
         php:
           handler: \DynamicScreen\Twitter\TwitterDriver\TwitterAuthProviderHandler
         node:
