@@ -2,8 +2,8 @@
 id: app-twitter-dynamicscreen
 name: app.name
 description: app.description
-logo: app.logo
-version: 0.2.0
+logo: fab fa-twitter
+version: 0.4.0
 channel: stable
 api-level: 1
 color: blue
@@ -12,13 +12,24 @@ author:
     email: bonjour@dynamicscreen.com
 privileges:
     needs_account:
-        -   identifier: google1
-            type: google
-            why: privileges.needs_account.google.why
-        -   identifier: microsoft1
-            type: microsoft
-            why: privileges.needs_account.microsoft.why
+        -   identifier: twitter-driver
+            type: twitter
+            why: privileges.needs_account.twitter.why
 modules:
+    - name: modules.twitter-driver.name
+      logo: fab fa-twitter
+      description: modules.twitter-driver.description
+      identifier: twitter-driver
+      color: orange
+      type: auth-provider
+      options:
+        provider: twitter
+        vue:
+          component: src/Twitter/TwitterAccount.ts
+        php:
+          handler: \DynamicScreen\Twitter\TwitterDriver\TwitterAuthProviderHandler
+        node:
+          handler: src/handler.js
     - name: modules.twitter.name
       logo: modules.twitter.logo
       identifier: twitter

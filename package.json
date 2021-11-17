@@ -9,7 +9,7 @@
   "author": "DynamicScreen",
   "license": "MIT",
   "dependencies": {
-    "dynamicscreen-sdk-js": "^0.0.13",
+    "dynamicscreen-sdk-js": "^0.0.20",
     "i18next": "^20.4.0",
     "webpack": "^5.50.0"
   },

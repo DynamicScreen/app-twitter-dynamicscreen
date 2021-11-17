@@ -2,24 +2,28 @@
   "app": {
     "name": "Twitter",
     "description": "Display your last tweets from Twitter",
-    "logo": "fab fa-twitter",
     "author": {
       "name": "DynamicScreen",
       "email": "bonjour@dynamicscreen.com",
-      "note": "Written with love <3 Buy me a cofee @ itsajoke.com !"
+      "note": "Take some notes."
     }
   },
   "privileges": {
     "needs_account": {
-      "google": {
-        "why": "Because it's required... :'("
+      "twitter": {
+        "why": "We need access to your account to fetch latest live data."
       }
     }
   },
   "modules": {
-    "weather": {
+    "twitter": {
       "name": "Twitter",
       "description": "Display some tweets from Twitter",
+      "logo": "fab fa-twitter"
+    },
+    "twitter-driver": {
+      "name": "Twitter",
+      "description": "Connector to allow twitter API authentication.",
       "logo": "fab fa-twitter"
     }
   }
