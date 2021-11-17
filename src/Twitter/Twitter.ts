@@ -15,8 +15,8 @@ import { h } from "vue"
 import Tweet from "./components/Tweet";
 import TweetAttachments from "./components/TweetAttachments";
 
-const en = require("../../../languages/en.json");
-const fr = require("../../../languages/fr.json");
+const en = require("../../languages/en.json");
+const fr = require("../../languages/fr.json");
 
 export default class TwitterSlideModule extends SlideModule {
     constructor(context: ISlideContext) {
