@@ -1,12 +1,12 @@
 <?php
 
-namespace DynamicScreen\Twitter;
+namespace DynamicScreen\Twitter\Twitter;
 
 use App\Domain\Module\Model\Module;
 use DynamicScreen\SdkPhp\Handlers\SlideHandler;
 use DynamicScreen\SdkPhp\Interfaces\ISlide;
 
-class TwitterHandler extends SlideHandler
+class TwitterSlideHandler extends SlideHandler
 {
     public function __construct(Module $module)
     {

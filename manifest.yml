@@ -29,6 +29,6 @@ modules:
           component: src/Twitter/Twitter.ts
           options: src/Twitter/TwitterOptions.ts
       php:
-          handler: Vendor\DynamicScreenTwitter\TwitterHandler
+          handler: \DynamicScreen\Twitter\Twitter\TwitterSlideHandler
       node:
           handler: src/handler.js
