@@ -2,6 +2,7 @@
   "app": {
     "name": "Twitter",
     "description": "Display your last tweets from Twitter",
+    "logo": "fab fa-twitter",
     "author": {
       "name": "DynamicScreen",
       "email": "bonjour@dynamicscreen.com",
