@@ -12,8 +12,8 @@ import {computed, inject, InjectionKey, onMounted, provide, reactive, Ref, ref, 
 import i18next from "i18next";
 
 import { h } from "vue"
-import Tweet from "./components/Tweet";
-import TweetAttachments from "./components/TweetAttachments";
+import Tweet from "../Components/Tweet";
+import TweetAttachments from "../Components/TweetAttachments";
 
 const en = require("../../languages/en.json");
 const fr = require("../../languages/fr.json");
