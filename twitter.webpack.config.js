@@ -4,7 +4,7 @@ const { VueLoaderPlugin } = require('vue-loader')
 module.exports = {
     mode: 'development',
     entry: {
-        Twitter: path.resolve(__dirname, 'src/twitter/slide/Twitter.ts'),
+        Twitter: path.resolve(__dirname, 'src/Twitter/Twitter.ts'),
     }
     ,
     output: {

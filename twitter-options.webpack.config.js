@@ -4,7 +4,7 @@ const { VueLoaderPlugin } = require('vue-loader')
 module.exports = {
     mode: 'development',
     entry: {
-        TwitterOptions: path.resolve(__dirname, 'src/twitter/TwitterOptions.vue'),
+        TwitterOptions: path.resolve(__dirname, 'src/Twitter/TwitterOptions.vue'),
     }
     ,
     output: {
