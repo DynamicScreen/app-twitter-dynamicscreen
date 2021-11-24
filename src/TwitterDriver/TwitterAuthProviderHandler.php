@@ -2,9 +2,8 @@
 
 namespace DynamicScreen\Twitter\TwitterDriver;
 
-use Abraham\TwitterOAuth\TwitterOAuthException;
 use DynamicScreen\SdkPhp\Handlers\OAuthProviderHandler;
-use Illuminate\View\View;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Abraham\TwitterOAuth\TwitterOAuth;
 use Illuminate\Support\Facades\Session;
@@ -45,21 +44,11 @@ class TwitterAuthProviderHandler extends OAuthProviderHandler
         return '#00acee';
     }
 
-//    public function renderOptions(Account $account) : View
-//    {
-//        try {
-//            $infos = $this->getUserInfos($account);
-//            return view('accounts-options.twitter', compact('account', 'infos'));
-//        } catch (\Exception $e) {
-//            return view('accounts-options.twitter', compact('account'));
-//        }
-//    }
-
     public function testConnection($config = null)
     {
         $options = $config ?? $this->default_config;
 
-        $twitterConnection = new TwitterOAuth(config('ttwitter.CONSUMER_KEY'), config('ttwitter.CONSUMER_SECRET'), $options['oauth_token'], $options['oauth_token_secret']);
+        $twitterConnection = $this->createConnection($config);
         $twitterConnection->get('application/rate_limit_status');
         return response('', $twitterConnection->getLastHttpCode());
 
@@ -69,7 +58,7 @@ class TwitterAuthProviderHandler extends OAuthProviderHandler
     {
         $options = $config ?? $this->default_config;
 
-        $twitterConnection = new TwitterOAuth(config('ttwitter.CONSUMER_KEY'), config('ttwitter.CONSUMER_SECRET'), $options['oauth_token'], $options['oauth_token_secret']);
+        $twitterConnection = $this->createConnection($config);
         $infos = $twitterConnection->get('users/show', ['user_id' => $options['user_id']]);
         if ($twitterConnection->getLastHttpCode() != 200) {
             throw new \Exception('Cannot get user informations');
@@ -105,7 +94,7 @@ class TwitterAuthProviderHandler extends OAuthProviderHandler
         return $url;
     }
 
-    public function callback($request, $redirectUrl)
+    public function callback($request, $redirectUrl = null)
     {
         $consumer_key = config("services.{$this->getProviderIdentifier()}.client_id");
         $consumer_secret = config("services.{$this->getProviderIdentifier()}.client_secret");
@@ -138,7 +127,7 @@ class TwitterAuthProviderHandler extends OAuthProviderHandler
         $consumer_key = config("services.{$this->getProviderIdentifier()}.client_id");
         $consumer_secret = config("services.{$this->getProviderIdentifier()}.client_secret");
 
-        return new TwitterOAuth($consumer_key, $consumer_secret, $accountOptions['oauth_token'], $accountOptions['oauth_token_secret']);
+        return new TwitterOAuth($consumer_key, $consumer_secret, Arr::get($accountOptions, 'oauth_token'), Arr::get($accountOptions, 'oauth_token_secret'));
     }
 
     public function getTweetsOf($username, $options = [], $config = null)

@@ -5,7 +5,8 @@ import {
   IGuardsManager,
   ISlideContext,
   IPublicSlide,
-  SlideModule
+  SlideModule,
+  SlideUpdateFunctions
 } from "dynamicscreen-sdk-js";
 
 import i18next from "i18next";
@@ -46,26 +47,27 @@ export default class TwitterOptionsModule extends SlideModule {
   }
 
   initI18n() {
-    i18next.init({
-      fallbackLng: 'en',
-      lng: 'fr',
-      resources: {
-        en: { translation: en },
-        fr: { translation: fr },
-      },
-      debug: true,
-    }, (err, t) => {
-      if (err) return console.log('something went wrong loading translations', err);
-    });
+
   };
 
 // @ts-ignore
-  setup(props, ctx, update, OptionsContext) {
-    const { h, reactive, ref } = ctx;
+  setup(props, ctx, update: SlideUpdateFunctions, OptionsContext) {
+    const { h } = ctx;
 
-    return () =>
-      h("div", {}, () => {
-        return []
-      })
+    const { Field, FieldsRow, TextInput, NumberInput } = OptionsContext.components
+
+    return () => [
+      h(Field, { class: 'flex-1', label: "Titre" }, [
+        h(TextInput, { min: 0, max: 100, default: 1, ...update.option("title") })
+      ]),
+      h(FieldsRow, {}, [
+        h(Field, { class: 'flex-1', label: "Nom d'utilisateur" }, [
+          h(TextInput, { min: 0, max: 100, default: 1, ...update.option("username") })
+        ]),
+        h(Field, { class: 'flex-1', label: "Nombre de tweets à afficher" }, [
+          h(NumberInput, { min: 0, max: 100, default: 1, ...update.option("page") })
+        ]),
+      ])
+    ]
   }
 }
