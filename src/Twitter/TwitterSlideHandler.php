@@ -2,16 +2,11 @@
 
 namespace DynamicScreen\Twitter\Twitter;
 
-use App\Domain\Module\Model\Module;
 use DynamicScreen\SdkPhp\Handlers\SlideHandler;
 use DynamicScreen\SdkPhp\Interfaces\ISlide;
 
 class TwitterSlideHandler extends SlideHandler
 {
-    public function __construct(Module $module)
-    {
-        parent::__construct($module);
-    }
 
     public function fetch(ISlide $slide): void
     {
@@ -21,7 +16,7 @@ class TwitterSlideHandler extends SlideHandler
         if ($driver == null) return;
 
         $expiration = Carbon::now()->addHour();
-        $cache_key = "{$this->getProviderIdentifier()}::{$options['username']}_{$options['page']}";
+        $cache_key = "{$driver->getProviderIdentifier()}::{$options['username']}_{$options['page']}";
         $api_response = app('cache')->remember($cache_key, $expiration, function () use ($options, $driver, $account) {
             if (starts_with($options['username'], '#')) {
                 $response = $driver->search('#' . ltrim($options['username'], '#'),
@@ -43,7 +38,7 @@ class TwitterSlideHandler extends SlideHandler
             }
         });
 
-        foreach (collect(json_decode($api_response))->chunk(4) as $chunk){
+        foreach (collect(json_decode($api_response))->chunk(4) as $chunk) {
             $tweets = [];
             $tweetImg =false;
             foreach ($chunk as $tweet){
