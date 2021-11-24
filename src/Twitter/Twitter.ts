@@ -8,12 +8,14 @@ import {
     SlideModule
 } from "dynamicscreen-sdk-js";
 
-import {computed, inject, InjectionKey, onMounted, provide, reactive, Ref, ref, VNode} from 'vue';
+import {computed, reactive, ref} from 'vue';
 import i18next from "i18next";
 
 import { h } from "vue"
 import Tweet from "../Components/Tweet";
 import TweetAttachments from "../Components/TweetAttachments";
+import Post from "../../../../app-facebook-dynamicscreen/src/Components/Post";
+import PostAttachments from "../../../../app-facebook-dynamicscreen/src/Components/PostAttachments";
 
 const en = require("../../languages/en.json");
 const fr = require("../../languages/fr.json");
@@ -87,7 +89,21 @@ export default class TwitterSlideModule extends SlideModule {
         });
 
         this.context.onPlay(async () => {
-
+          this.context.anime({
+            targets: "#tweet",
+            translateX: [-40, 0],
+            opacity: [0, 1],
+            duration: 600,
+            easing: 'easeOutQuad'
+          });
+          this.context.anime({
+            targets: "#user",
+            translateX: [-40, 0],
+            opacity: [0, 1],
+            duration: 600,
+            delay: 250,
+            easing: 'easeOutQuad'
+          });
         });
 
         // this.context.onPause(async () => {
@@ -98,30 +114,27 @@ export default class TwitterSlideModule extends SlideModule {
         });
 
         return () =>
-            h("div", {
-                class: "w-full h-full flex justify-center items-center"
-            }, [
-                !isTweetWithAttachment.value && h(Tweet, {
-                    text: text.value,
-                    userPicture: userPicture.value,
-                    userName: userName.value,
-                    publicationDate: publicationDate.value,
-                    class: "w-1/2 font-medium"
-                }),
-                isTweetWithAttachment.value && h(TweetAttachments, {
-                    text: text.value,
-                    userPicture: userPicture.value,
-                    userName: userName.value,
-                    publicationDate: publicationDate.value,
-                    tweetAttachment: tweetAttachment.value,
-                    class: "w-full h-full"
-                }),
-                h("div", {
-                    class: "bg-contain bg-no-repeat bg-center w-16 h-16 absolute top-10 right-10",
-                    style: {
-                        backgroundImage: "url(" + logo.value + ")"
-                    }
-                })
-            ])
+          h("div", {
+            class: "w-full h-full flex justify-center items-center"
+          }, [
+            !isTweetWithAttachment.value && h(Tweet, {
+              text: text.value,
+              userPicture: userPicture.value,
+              userName: userName.value,
+              publicationDate: publicationDate.value,
+              class: "w-1/2"
+            }),
+            isTweetWithAttachment.value && h(TweetAttachments, {
+              text: text.value,
+              userPicture: userPicture.value,
+              userName: userName.value,
+              publicationDate: publicationDate.value,
+              tweetAttachment: tweetAttachment.value,
+              class: "w-full h-full"
+            }),
+            h("i", {
+              class: "w-16 h-16 absolute top-10 right-10 portrait:bottom-10 portrait:top-auto text-blue-400 " + logo
+            })
+          ])
     }
 }
