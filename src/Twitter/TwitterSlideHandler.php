@@ -40,7 +40,7 @@ class TwitterSlideHandler extends SlideHandler
             }
         });
 
-        foreach (collect(json_decode($api_response))->chunk(4) as $chunk){
+        foreach (collect(json_decode($api_response))->chunk(4) as $chunk) {
             $tweets = [];
             $tweetImg =false;
             foreach ($chunk as $tweet){

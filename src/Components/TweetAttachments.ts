@@ -18,35 +18,39 @@ export default defineComponent({
         const publicationDate = toRef(props, "publicationDate");
 
         return () =>
+          h("div", {
+            class: "container flex flex-row portrait:flex-col"
+          }, [
             h("div", {
-                class: "container flex flex-row"
+              class: "bloc-left w-1/2 h-full portrait:w-full flex bg-cover bg-no-repeat bg-center flex-row items-center",
+              style: {
+                backgroundImage: "url(" + tweetAttachment.value + ")"
+              }
             }, [
+              h("div", {
+                class: "h-full w-full bg-opacity-30 bg-black backdrop-filter backdrop-blur-lg bg-contain bg-no-repeat bg-center",
+                style: {
+                  backgroundImage: "url(" + tweetAttachment.value + ")"
+                }
+              })
+            ]),
+            h("div", {
+              class: "bloc-right w-1/2 h-full portrait:w-full flex items-center justify-center"
+            }, [
+              h("div", {
+                class: "w-2/3 h-2/3 text-2xl font-semibold flex justify-center flex-col space-y-10"
+              }, [
                 h("div", {
-                    class: "bloc-left w-1/2 flex h-full bg-blue-400 flex-row items-center"
-                }, [
-                    h("div", {
-                        class: "h-2/3 w-full bg-contain bg-no-repeat bg-center",
-                        style: {
-                            backgroundImage: "url(" + tweetAttachment.value + ")"
-                        }
-                    })
-                ]),
-                h("div", {
-                    class: "bloc-right w-1/2 h-full flex items-center justify-center"
-                }, [
-                    h("div", {
-                        class: "w-2/3 h-2/3 text-2xl font-semibold flex justify-center flex-col space-y-10"
-                    }, [
-                        h("div", {
-                        }, text.value),
-                        h(User, {
-                            userPicture: userPicture.value,
-                            userName: userName.value,
-                            publicationDate: publicationDate.value,
-                        })
-                    ])
-                ])
+                  id: "tweet"
+                }, text.value),
+                h(User, {
+                  userPicture: userPicture.value,
+                  userName: userName.value,
+                  publicationDate: publicationDate.value,
+                })
+              ])
             ])
+          ])
     }
 
 })

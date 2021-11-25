@@ -16,17 +16,18 @@ export default defineComponent({
         const publicationDate = toRef(props, "publicationDate");
 
         return () =>
+          h("div", {
+            class: "container flex flex-col space-y-10"
+          }, [
             h("div", {
-                class: "container flex flex-col space-y-10"
-            }, [
-                h("div", {
-                    class: "text-3xl font-semibold text-gray-800"
-                }, text.value),
-                h(User, {
-                    userPicture: userPicture.value,
-                    userName: userName.value,
-                    publicationDate: publicationDate.value,
-                })
-            ])
+              class: "text-3xl font-semibold text-gray-800",
+              id: "tweet"
+            }, text.value),
+            h(User, {
+              userPicture: userPicture.value,
+              userName: userName.value,
+              publicationDate: publicationDate.value,
+            })
+          ])
     }
 })
