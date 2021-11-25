@@ -57,9 +57,10 @@ class TwitterAuthProviderHandler extends OAuthProviderHandler
 
     public function testConnection($config = null)
     {
-        $options = $config ?? $this->default_config;
+        $config = $config ?? $this->default_config;
 
-        $twitterConnection = new TwitterOAuth(config('ttwitter.CONSUMER_KEY'), config('ttwitter.CONSUMER_SECRET'), $options['oauth_token'], $options['oauth_token_secret']);
+        $twitterConnection = $this->createConnection($config);
+
         $twitterConnection->get('application/rate_limit_status');
         return response('', $twitterConnection->getLastHttpCode());
 
@@ -69,9 +70,9 @@ class TwitterAuthProviderHandler extends OAuthProviderHandler
     {
         $options = $config ?? $this->default_config;
 
-        $twitterConnection = new TwitterOAuth(config('ttwitter.CONSUMER_KEY'), config('ttwitter.CONSUMER_SECRET'), $options['oauth_token'], $options['oauth_token_secret']);
-        $infos = $twitterConnection->get('users/show', ['user_id' => $options['user_id']]);
-        if ($twitterConnection->getLastHttpCode() != 200) {
+        $connection = $this->createConnection($config);
+        $infos = $connection->get('users/show', ['user_id' => $options['user_id']]);
+        if ($connection->getLastHttpCode() != 200) {
             throw new \Exception('Cannot get user informations');
         }
         return $infos;
@@ -80,11 +81,12 @@ class TwitterAuthProviderHandler extends OAuthProviderHandler
 
     public function signin($callbackUrl = null)
     {
-        $callbackUrl = $callbackUrl ?? route('api.oauth.callback');
 
         $consumer_key = config("services.{$this->getProviderIdentifier()}.client_id");
         $consumer_secret = config("services.{$this->getProviderIdentifier()}.client_secret");
         $ds_uuid = 'oauth.twitter.' . (string)Str::uuid();
+        $callbackUrl = route('api.oauth.callback', ['ds_uuid' => $ds_uuid]);
+
         $twitteroauth = new TwitterOAuth($consumer_key, $consumer_secret);
         $request_token = $twitteroauth->oauth('oauth/request_token', [
             'oauth_callback' => $callbackUrl,
@@ -99,6 +101,7 @@ class TwitterAuthProviderHandler extends OAuthProviderHandler
         $url = $twitteroauth->url(
             'oauth/authorize', [
                 'oauth_token' => $request_token['oauth_token'],
+                'ds_uuid' => $ds_uuid,
             ]
         );
 
