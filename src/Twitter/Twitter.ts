@@ -1,51 +1,21 @@
 import {
-    BaseContext,
-    AssetDownload,
-    IAssetsStorageAbility,
-    IGuardsManager,
-    ISlideContext,
-    IPublicSlide,
-    SlideModule
+  ISlideContext,
+  IPublicSlide,
+  SlideModule,
+  VueInstance
 } from "dynamicscreen-sdk-js";
 
-import {computed, reactive, ref} from 'vue';
-
-import { h } from "vue"
 import Tweet from "../Components/Tweet";
 import TweetAttachments from "../Components/TweetAttachments";
 
 export default class TwitterSlideModule extends SlideModule {
-    constructor(context: ISlideContext) {
-        super(context);
-    }
-
     async onReady() {
         return true;
     };
 
-    onMounted() {
-        console.log('onMounted')
-    }
-
-    //@ts-ignore
-    onErrorTracked(err: Error, instance: Component, info: string) {
-    }
-
-    //@ts-ignore
-    onRenderTriggered(e) {
-    }
-
-    //@ts-ignore
-    onRenderTracked(e) {
-    }
-
-    onUpdated() {
-    }
-
-    // @ts-ignore
-    setup(props, ctx) {
-        const slide = reactive(props.slide) as IPublicSlide
-        this.context = reactive(props.slide.context)
+    setup(props: Record<string, any>, vue: VueInstance, context: ISlideContext) {
+        const { h, reactive, computed, ref } = vue;
+        const slide = reactive(this.context.slide) as IPublicSlide
 
         const logo = ref(slide.data.logo);
         const isTweetWithAttachment = computed(() => {
@@ -56,13 +26,6 @@ export default class TwitterSlideModule extends SlideModule {
         const userPicture = ref(slide.data.user.picture);
         const userName = ref(slide.data.user.name);
         const publicationDate = ref(slide.data.publicationDate);
-
-        this.context.onPrepare(async () => {
-
-        });
-
-        this.context.onReplay(async () => {
-        });
 
         this.context.onPlay(async () => {
           this.context.anime({
@@ -80,13 +43,6 @@ export default class TwitterSlideModule extends SlideModule {
             delay: 250,
             easing: 'easeOutQuad'
           });
-        });
-
-        // this.context.onPause(async () => {
-        //   console.log('Message: onPause')
-        // });
-
-        this.context.onEnded(async () => {
         });
 
         return () =>

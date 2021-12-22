@@ -19,12 +19,15 @@
     "twitter": {
       "name": "Twitter",
       "description": "Affiche vos derniers tweets",
-      "logo": "fab fa-twitter"
+      "options": {
+        "title": "Titre",
+        "username": "Nom d'utilisateur",
+        "tweets_count": "Nombre de tweets"
+      }
     },
     "twitter-driver": {
       "name": "Twitter",
-      "description": "Permet la connection à l'API de twitter.",
-      "logo": "fab fa-twitter"
+      "description": "Permet la connection à l'API de twitter."
     }
   }
 }

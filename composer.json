@@ -1,7 +1,4 @@
 {
-  "name": "dynamicscreen/app-twitter",
-  "description": "Twitter app for DynamicScreen SaaS",
-  "license": "MIT",
   "authors": [
     {
       "name": "DynamicScreen",
@@ -10,11 +7,6 @@
   ],
   "require": {
     "abraham/twitteroauth": "^3.1"
-  },
-  "config": {
-    "optimize-autoloader": true,
-    "preferred-install": "dist",
-    "sort-packages": true
   },
   "autoload": {
     "psr-4": {

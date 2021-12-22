@@ -1,70 +1,29 @@
 import {
-  BaseContext,
-  AssetDownload,
-  IAssetsStorageAbility,
-  IGuardsManager,
-  ISlideContext,
-  IPublicSlide,
-  SlideModule,
-  SlideUpdateFunctions
+  ISlideOptionsContext,
+  SlideOptionsModule,
+  VueInstance
 } from "dynamicscreen-sdk-js";
 
-import i18next from "i18next";
-
-const en = require("../../languages/en.json");
-const fr = require("../../languages/fr.json");
-
-export default class TwitterOptionsModule extends SlideModule {
-  constructor(context: ISlideContext) {
-    super(context);
-  }
-
-  trans(key: string) {
-    return i18next.t(key);
-  };
-
+export default class TwitterOptionsModule extends SlideOptionsModule {
   async onReady() {
     return true;
   };
 
-  onMounted() {
-    console.log('onMounted Twitter OPTIONS')
-  }
+  setup(props: Record<string, any>, vue: VueInstance, context: ISlideOptionsContext) {
+    const { h } = vue;
 
-//@ts-ignore
-  onErrorTracked(err: Error, instance: Component, info: string) {
-  }
-
-//@ts-ignore
-  onRenderTriggered(e) {
-  }
-
-//@ts-ignore
-  onRenderTracked(e) {
-  }
-
-  onUpdated() {
-  }
-
-  initI18n() {
-
-  };
-
-// @ts-ignore
-  setup(props, ctx, update: SlideUpdateFunctions, OptionsContext) {
-    const { h } = ctx;
-
-    const { Field, FieldsRow, TextInput, NumberInput } = OptionsContext.components
+    const update = this.context.update;
+    const { Field, FieldsRow, TextInput, NumberInput } = this.context.components
 
     return () => [
-      h(Field, { class: 'flex-1', label: "Titre" }, [
+      h(Field, { class: 'flex-1', label: this.t('modules.today.options.title') }, [
         h(TextInput, { min: 0, max: 100, default: 1, ...update.option("title") })
       ]),
       h(FieldsRow, {}, [
-        h(Field, { class: 'flex-1', label: "Nom d'utilisateur" }, [
+        h(Field, { class: 'flex-1', label: this.t('modules.today.options.username') }, [
           h(TextInput, { min: 0, max: 100, default: 1, ...update.option("username") })
         ]),
-        h(Field, { class: 'flex-1', label: "Nombre de tweets à afficher" }, [
+        h(Field, { class: 'flex-1', label: this.t('modules.today.options.tweets_count') }, [
           h(NumberInput, { min: 0, max: 100, default: 1, ...update.option("page") })
         ]),
       ])

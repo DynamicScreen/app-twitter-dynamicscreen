@@ -31,11 +31,11 @@ modules:
         node:
           handler: src/handler.js
     - name: modules.twitter.name
-      logo: modules.twitter.logo
+      logo: fab fa-twitter
       identifier: twitter
       color: deepskyblue
       type: slide
-      description: Display your last tweets
+      description: module.twitter.description
       options:
         privileges:
           needs_account:

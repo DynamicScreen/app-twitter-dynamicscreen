@@ -19,12 +19,15 @@
     "twitter": {
       "name": "Twitter",
       "description": "Display some tweets from Twitter",
-      "logo": "fab fa-twitter"
+      "options": {
+        "title": "Title",
+        "username": "Username",
+        "tweets_count": "Tweets count"
+      }
     },
     "twitter-driver": {
       "name": "Twitter",
-      "description": "Connector to allow twitter API authentication.",
-      "logo": "fab fa-twitter"
+      "description": "Connector to allow twitter API authentication."
     }
   }
 }
