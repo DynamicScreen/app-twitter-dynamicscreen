@@ -27,7 +27,7 @@ class TwitterSlideHandler extends SlideHandler
                 if (!isset($response->statuses)) {
                     return [];
                 }
-                $collection_tweets = collect($response->statuses)->map(function ($tweet) use ($driver) {
+                $collection_tweets = collect($response->statuses)->map(function ($tweet) {
                     return $this->presentTweet($tweet);
                 });
                 return $collection_tweets->toJson();

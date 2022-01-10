@@ -3,43 +3,35 @@
 namespace DynamicScreen\Twitter\TwitterDriver;
 
 use Abraham\TwitterOAuth\TwitterOAuth;
+use App\Domain\Module\Model\Module;
+use Carbon\Carbon;
 use DynamicScreen\SdkPhp\Handlers\OAuthProviderHandler;
+use Illuminate\Http\Client\Request;
 use Illuminate\Support\Arr;
 
 class TwitterAuthProviderHandler extends OAuthProviderHandler
 {
     public static string $provider = 'twitter';
 
-    public $default_config = [];
-
-    public function __construct($config = null)
+    public function __construct(Module $module, $config = null)
     {
-        $this->default_config = $config;
+        parent::__construct($module, $config);
     }
 
-    public function identifier()
+    public function provideData($settings = [])
     {
-        return 'twitter-driver';
-    }
+        $options = request()->get('options');
 
-    public function name()
-    {
-        return "Twitter";
-    }
+        $this->addData('users', function () use ($options) {
+            $response = $this->search($options['q'], ['count' => 6]);
 
-    public function description()
-    {
-        return "OAuth Twitter";
-    }
-
-    public function icon()
-    {
-        return "fab fa-twitter";
-    }
-
-    public function color()
-    {
-        return '#00acee';
+            return collect($response)->map(function ($tweeter) {
+                return [
+                    'name' => $tweeter->name,
+                    'screen_name' => $tweeter->screen_name,
+                ];
+            })->toArray();
+        });
     }
 
     public function testConnection($config = null)
@@ -142,7 +134,7 @@ class TwitterAuthProviderHandler extends OAuthProviderHandler
         $config = $config ?? $this->default_config;
 
         return $this->createConnection($config)
-            ->get('search/tweets', array_merge([
+            ->get('users/search', array_merge([
                 'q' => $q,
             ], $options));
     }
