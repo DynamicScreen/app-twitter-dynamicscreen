@@ -5,7 +5,9 @@ namespace DynamicScreen\Twitter\TwitterDriver;
 use Abraham\TwitterOAuth\TwitterOAuth;
 use App\Domain\Module\Model\Module;
 use DynamicScreen\SdkPhp\Handlers\OAuthProviderHandler;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 class TwitterAuthProviderHandler extends OAuthProviderHandler
 {
