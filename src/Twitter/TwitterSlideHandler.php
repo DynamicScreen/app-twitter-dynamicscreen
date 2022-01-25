@@ -19,55 +19,68 @@ class TwitterSlideHandler extends SlideHandler
         if ($driver == null) return;
 
         $expiration = Carbon::now()->addHour();
-        $cache_key = "{$driver->getProviderIdentifier()}::{$options['username']}_{$options['page']}";
+        $cache_key = "{$driver->getProviderIdentifier()}::{$options['username']}_{$options['page']}_1";
         $api_response = app('cache')->remember($cache_key, $expiration, function () use ($options, $driver) {
             if (Str::startsWith($options['username'], '#')) {
-                $response = $driver->search('#' . ltrim($options['username'], '#'),
-                    ['count' => $options['page'] * 4]);
+                $username = '#' . ltrim($options['username'], '#');
+                $response = $driver->search($username, ['count' => $options['page']]);
+
                 if (!isset($response->statuses)) {
                     return [];
                 }
+
                 $collection_tweets = collect($response->statuses)->map(function ($tweet) {
                     return $this->presentTweet($tweet);
                 });
+
                 return $collection_tweets->toJson();
-            }
-            else {
-                $collection_tweets = collect($driver->getTweetsOf('@' . ltrim($options['username'], '@'), ['count' => $options['page'] * 4]));
+            } else {
                 $collection_tweets_formatted = [];
-                foreach($collection_tweets as $tweet) {
+                $username = '@' . ltrim($options['username'], '@');
+                $collection_tweets = collect($driver->getTweetsOf($username, ['count' => $options['page']]));
+
+                foreach ($collection_tweets as $tweet) {
                     $collection_tweets_formatted[] = $this->presentTweet($tweet);
                 }
+
                 return json_encode($collection_tweets_formatted);
             }
         });
 
-        foreach (collect(json_decode($api_response))->chunk(4) as $chunk) {
-            $tweets = [];
-            $tweetImg =false;
-            foreach ($chunk as $tweet){
-                if($tweet->media_url and $tweetImg == false){
-                    $tweetImg = $tweet;
-                }
-                else{
-                    $tweets[] = $tweet;
-                }
-            }
-            $lastTweet = null;
-
-            if($tweetImg == false){
-                $lastTweet = collect($tweets)->first();
-                $tweets = collect($tweets)->slice(1);
-            }
-            $this->addSlide([
-                'tweets' => $tweets,
-                'title' => $options['title'],
-                'firstImg' => $tweetImg,
-                'lastTweet' => $lastTweet
-            ]);
+        foreach (collect(json_decode($api_response)) as $tweet) {
+            $this->addSlide($tweet);
         }
 
-        $this->addSlide([]);
+//        foreach (collect(json_decode($api_response)) as $tweet) {
+//            $tweets = [];
+//            $tweetImg =false;
+
+//            foreach ($chunk as $tweet){
+//                if($tweet->media_url and $tweetImg == false){
+//                    $tweetImg = $tweet;
+//                }
+//                else{
+//                    $tweets[] = $tweet;
+//                }
+//            }
+//            $lastTweet = null;
+//
+//            if($tweetImg == false){
+//                $lastTweet = collect($tweets)->first();
+//                $tweets = collect($tweets)->slice(1);
+//            }
+//            $this->addSlide(collect($tweets)->first());
+
+//            $this->addSlide(
+//                'tweets' => $tweets,
+//                'title' => $options['title'],
+//                'firstImg' => $tweetImg,
+//                'lastTweet' => $lastTweet
+//            );
+//        }
+
+
+//        $this->addSlide([]);
     }
 
     protected function linkify($text)

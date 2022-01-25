@@ -51,6 +51,7 @@ export default class TwitterOptionsModule extends SlideOptionsModule {
         });
         isAccountDataLoaded.value = true;
       }).catch((err) => {
+        console.log('error while fetching account data: ', err)
         isAccountDataLoaded.value = false;
       });
     }
@@ -69,28 +70,7 @@ export default class TwitterOptionsModule extends SlideOptionsModule {
             ...update.option("username"),
           })
         ]),
-        // isAccountDataLoaded.value && h(Field, { class: 'flex-1', label: this.t('modules.twitter.options.username') }, [
-        //   h(Select, {
-        //     options: usernames.value,
-        //     // options: [
-        //     //   {
-        //     //     name: 'aaa',
-        //     //     screen_name: 'alo'
-        //     //   },
-        //     //   {
-        //     //     name: 'dwdwd',
-        //     //     screen_name: 'reeeeee'
-        //     //   }
-        //     // ],
-        //     placeholder: "Choisissez un compte tweeter",
-        //     keyProp: 'screen_name',
-        //     valueProp: 'name',
-        //     ...update.option(username.value),
-        //     "onUpdate:modelValue": (val) => console.log(val, 'update'),
-        //     "onUpdate:filterTerm": (val) => console.log(val, 'update filter')
-        //   })
-        // ]),
-        h(Field, { class: 'flex-1', label: this.t('modules.twitter.options.tweets_count') }, [
+        h(Field, { class: 'flex-1', label: this.t('modules.twitter.options.pages_count') }, [
           h(NumberInput, { min: 0, max: 100, default: 1, ...update.option("page") })
         ]),
       ])

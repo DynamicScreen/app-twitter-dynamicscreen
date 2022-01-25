@@ -52,8 +52,6 @@ export default class TwitterSlideModule extends SlideModule {
           });
         });
 
-        console.log('aa', isTweetWithAttachment.value)
-
         return () => h("div", {
             class: "w-full h-full flex justify-center items-center"
           }, [
