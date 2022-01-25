@@ -13,6 +13,7 @@ export default class TwitterOptionsModule extends SlideOptionsModule {
   setup(props: Record<string, any>, vue: VueInstance, context: ISlideOptionsContext) {
     //@ts-ignore
     const { h, ref, reactive, watch, toRefs } = vue;
+    console.log('props model val', props.modelValue)
 
     const update = this.context.update;
     const { Field, FieldsRow, TextInput, NumberInput } = this.context.components
@@ -22,15 +23,19 @@ export default class TwitterOptionsModule extends SlideOptionsModule {
 
     let { username } = toRefs(props.modelValue);
 
+    if (!username) {
+      username = ref('')
+    }
+
     watch(() => username.value, debounce((searchTerm) => {
       if (searchTerm.length < 3) return []
 
       searchTwitterUser(searchTerm)
     }, 300))
 
-    watch(() => username.value, (searchTerm) => {
-      if (searchTerm.length < 3) usernames.value = []
-    })
+    // watch(() => username.value, (searchTerm) => {
+    //   if (searchTerm.length < 3) usernames.value = []
+    // })
 
     const searchTwitterUser = (searchTerm: string) => {
       this.context.getAccountData?.("twitter-driver", "users", {

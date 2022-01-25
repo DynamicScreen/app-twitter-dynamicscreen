@@ -17,15 +17,22 @@ export default class TwitterSlideModule extends SlideModule {
         const { h, reactive, computed, ref } = vue;
         const slide = reactive(this.context.slide) as IPublicSlide
 
-        const logo = ref(slide.data.logo);
+        // const logo = ref(slide.data.logo);
+
+        // const isTweetWithAttachment = computed(() => {
+        //     return !!slide.data.attachmentUrl;
+        // });
+      console.log(slide.data);
         const isTweetWithAttachment = computed(() => {
-            return !!slide.data.attachmentUrl;
+          return !!slide.data.media_url;
         })
-        const tweetAttachment = isTweetWithAttachment.value ? ref(slide.data.attachmentUrl) : null;
+
+      // const tweetAttachment = isTweetWithAttachment.value ? ref(slide.data.attachmentUrl) : null;
+      const tweetAttachment = isTweetWithAttachment.value ? ref(slide.data.media_url) : null;
         const text = ref(slide.data.text);
-        const userPicture = ref(slide.data.user.picture);
-        const userName = ref(slide.data.user.name);
-        const publicationDate = ref(slide.data.publicationDate);
+        const userPicture = ref(slide.data.avatar);
+        const userName = ref(slide.data.name);
+        const publicationDate = ref(slide.data.created_at);
 
         this.context.onPlay(async () => {
           this.context.anime({
@@ -45,17 +52,20 @@ export default class TwitterSlideModule extends SlideModule {
           });
         });
 
-        return () =>
-          h("div", {
+        console.log('aa', isTweetWithAttachment.value)
+
+        return () => h("div", {
             class: "w-full h-full flex justify-center items-center"
           }, [
+            //@ts-ignore
             !isTweetWithAttachment.value && h(Tweet, {
-              text: text.value,
-              userPicture: userPicture.value,
-              userName: userName.value,
-              publicationDate: publicationDate.value,
-              class: "w-1/2"
-            }),
+                text: text.value,
+                userPicture: userPicture.value,
+                userName: userName.value,
+                publicationDate: publicationDate.value,
+                class: "w-1/2"
+              }),
+            //@ts-ignore
             isTweetWithAttachment.value && h(TweetAttachments, {
               text: text.value,
               userPicture: userPicture.value,
@@ -64,9 +74,9 @@ export default class TwitterSlideModule extends SlideModule {
               tweetAttachment: tweetAttachment.value,
               class: "w-full h-full"
             }),
-            h("i", {
-              class: "w-16 h-16 absolute top-10 right-10 portrait:bottom-10 portrait:top-auto text-blue-400 " + logo
-            })
+            // h("i", {
+            //   class: "w-16 h-16 absolute top-10 right-10 portrait:bottom-10 portrait:top-auto text-blue-400 " + logo
+            // })
           ])
     }
 }
