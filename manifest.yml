@@ -6,7 +6,7 @@ logo: fab fa-twitter
 version: 0.4.0
 channel: stable
 api-level: 1
-color: blue
+color: deepskyblue
 author:
     name: DynamicScreen
     email: bonjour@dynamicscreen.com
@@ -20,7 +20,7 @@ modules:
       logo: fab fa-twitter
       description: modules.twitter-driver.description
       identifier: twitter-driver
-      color: orange
+      color: deepskyblue
       type: auth-provider
       options:
         provider: twitter
